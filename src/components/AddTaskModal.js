@@ -14,12 +14,12 @@ class AddTaskModal extends React.Component{
 
             this.state={
                 loading : false ,
-                editfield1 : this.props.editfield1,
-                editfield2 : this.props.editfield2,  //if coming from Add New Button then it will be 
+                editfield1 : '',
+                editfield2 : '',  //if coming from Add New Button then it will be 
                 index : this.props.index ,           //null
                 editrow : this.props.editrow,
-                pef1 : this.props.editfield1,
-                pef2 : this.props.editfield2,
+                pef1 : '',
+                pef2 : '',
                 user : this.props.user ,
                 update : this.props.update,
                 rowindex : this.props.rowindextoupdate
@@ -33,9 +33,13 @@ class AddTaskModal extends React.Component{
 
 
        static getDerivedStateFromProps(props,state){
-        return { rowindex : props.rowindextoupdate};
+        console.log('AddTaskModal derived state') ;
+        console.log(props);
+        return { rowindex : props.rowindextoupdate , editfield1 : props.f1prop};
       }
-       
+
+
+   
        handleChange(event){
          event.preventDefault();
          this.setState({
@@ -55,9 +59,7 @@ class AddTaskModal extends React.Component{
         })
     }
        render(){
-   
-        console.log('in render');
-        console.log(this.state)
+
 
         async function wait(duration = 2000) {
             await new Promise(resolve => setTimeout(resolve, duration));
@@ -85,8 +87,8 @@ class AddTaskModal extends React.Component{
                              <Form.Control
                                ref="taskref"
                                type="text"
-                               name="editfield1"
-                               value={this.state.editfield1}
+                               name="pef1"
+                              // value={this.state.editfield1}
                                onChange={this.handleChange}
                              />
                        </Form.Group>
@@ -97,8 +99,8 @@ class AddTaskModal extends React.Component{
                              <Form.Control
                                ref="dateref"
                                type="date"
-                               name="editfield2"
-                               value={this.state.editfield2}
+                               name="pef2"
+                              // value={this.state.editfield2}
                                onChange={this.handleChange}
                                required
                                placeholder="Date Added"

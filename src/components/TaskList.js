@@ -9,7 +9,10 @@ class TaskList extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            showModal : false 
+            showModal : false ,
+            rowindextoupdate : null,
+            f1 : '',
+            f2 : ''
         }
         this.ModalClose = this.ModalClose.bind(this);
 
@@ -24,11 +27,23 @@ class TaskList extends React.Component{
     }
    
     render(){
+    
+        console.log(this.state) ;
+        
+        var f1 = '' ; 
+        var f2 = '' ;
+
+        if(this.state.rowindextoupdate !== null){
+           console.log(this.state.rowindextoupdate);
+           f1 =  this.props.tasks[this.state.rowindextoupdate.index].field1;
+           f2 =  this.props.tasks[this.state.rowindextoupdate.index].field2;
+        }
+
         return(
 
             <div>
 
-            <AddTaskModal  show={this.state.showModal}  onHide = {this.ModalClose}  user='true'  update = 'true'  rowindextoupdate = {this.state.rowindextoupdate}/>
+            <AddTaskModal  show={this.state.showModal}  onHide = {this.ModalClose}  user='true'  update = 'true'  rowindextoupdate = {this.state.rowindextoupdate}  f1prop = {f1}  f2prop={f2}   />
 
             <table>
 
