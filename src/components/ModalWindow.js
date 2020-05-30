@@ -10,19 +10,29 @@ class ModalWindow extends React.Component{
 
        constructor(props){
          
+           console.log('in constructor');
+           console.log(props)
             super(props);
 
             this.state={
                 loading : false ,
-              
+                update : this.props.update,
+                rowindex : this.props.rowindextoupdate
             }
          
        }
+       
+       static getDerivedStateFromProps(props,state){
+        console.log('in derived');
+        console.log(props);
+        return { rowindex : props.rowindextoupdate};
+      }
        
      
        render(){
    
        
+        console.log(this.state)
 
         async function wait(duration = 2000) {
             await new Promise(resolve => setTimeout(resolve, duration));
@@ -56,8 +66,6 @@ class ModalWindow extends React.Component{
                                ref="usernameref"
                                type="text"
                                name="userfield1"
-                               value={this.state.userfield1}
-                               onChange={this.handleChange}
                              />
                       </Form.Group>
 
@@ -68,8 +76,6 @@ class ModalWindow extends React.Component{
                                ref="usermailref"
                                type="text"
                                name="userfield2"
-                               value={this.state.userfield2}
-                               onChange={this.handleChange}
                              />
                       </Form.Group>
                     
@@ -88,7 +94,13 @@ class ModalWindow extends React.Component{
                             }
                             else{
                                  
-                              
+                               
+                                if(this.state.update === 'true')
+                                   {
+                                       obj.index = this.state.rowindex.index ;
+                                       this.props.updateUser(obj);
+                                    }
+                                else
                                 this.props.addUser(obj);
                         
                                 this.props.onHide();

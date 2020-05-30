@@ -10,7 +10,7 @@ const usersReducer = (state=[] , action) =>{
              state.splice(action.payload,1);
              break;
          case 'UPDATE_USER':
-             console.log('Update task received in reducer');
+             console.log('Update task received in  USER reducer');
              
              const i = action.payload.index ;
              console.log(i);

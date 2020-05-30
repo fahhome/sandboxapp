@@ -28,7 +28,7 @@ class Userstab extends React.Component{
                       
                        <Button variant='primary' onClick={()=>{this.setState({showModal:true})}}    >Create a User</Button>
                      
-                       <ModalWindow  show={this.state.showModal}  onHide = {ModalClose}  user='true'/>
+                       <ModalWindow  show={this.state.showModal}  onHide = {ModalClose}  user='true' update = 'false'/>
 
                        
 
