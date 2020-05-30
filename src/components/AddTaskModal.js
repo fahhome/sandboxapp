@@ -20,7 +20,9 @@ class AddTaskModal extends React.Component{
                 editrow : this.props.editrow,
                 pef1 : this.props.editfield1,
                 pef2 : this.props.editfield2,
-                user : this.props.user
+                user : this.props.user ,
+                update : this.props.update,
+                rowindex : this.props.rowindextoupdate
 
             }
             
@@ -28,6 +30,11 @@ class AddTaskModal extends React.Component{
             this.toggledown = this.toggledown.bind(this);
             this.handleChange = this.handleChange.bind(this);
        }
+
+
+       static getDerivedStateFromProps(props,state){
+        return { rowindex : props.rowindextoupdate};
+      }
        
        handleChange(event){
          event.preventDefault();
@@ -118,13 +125,15 @@ class AddTaskModal extends React.Component{
                                 await wait();
                                 this.props.loadoff();
                                 //this.toggledown();
-                                 if(this.state.pef1 === undefined || this.state.pef2 === undefined)
+                                 if(this.state.update === "true")
                                   {
-                                    this.props.addTask(obj);
+
+                                    obj.index = this.state.rowindex.index ;   //change
+                                    this.props.updateTask(obj);
+                                   
                                   }
                                   else{
-                                    obj.index = this.state.index ;
-                                    this.props.updateTask(obj);
+                                    this.props.addTask(obj);
                                   }
                         
                                 this.props.onHide();

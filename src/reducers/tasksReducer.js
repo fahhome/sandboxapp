@@ -11,17 +11,8 @@ const tasksReducer = (state=[] , action) =>{
          case 'DELETE_TASK':
             console.log('INSIDE DELETE');
           
-           // state = [
-            //    ...state.slice(0, action.payload),
-             //   ...state.slice(action.payload + 1)
-            //]
-            //state = state.slice();
-            //state = state.filter ((item, index) => index !== 1)
-            //state = state.slice();
-            //state.splice(action.payload,1)
-           // return [...state.slice(0, action.payload), ...state.slice(action.payload + 1)]
-            
-            
+            state = state.slice();
+            state.splice(action.payload,1);
            break;
 
           

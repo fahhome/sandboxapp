@@ -31,9 +31,8 @@ class Todostab  extends React.Component{
                       
                       <Button variant='primary' onClick={()=>{this.setState({showModal:true})}}    >Create a ToDO</Button>
                      
-                       <AddTaskModal  show={this.state.showModal}  onHide = {ModalClose}  />
+                       <AddTaskModal  show={this.state.showModal}  onHide = {ModalClose}  update="false" />
 
-                       
 
                    </ButtonToolbar>
                    
