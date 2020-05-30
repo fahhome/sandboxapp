@@ -46,3 +46,18 @@ export const updateUser = task => ({
     type:'UPDATE_USER',
     payload:task
 })
+
+
+export const loadoff = ()=>(
+    {
+        type : 'LOAD_OFF',
+        payload : null 
+    }
+)
+
+export const loadon = ()=>(
+    {
+        type : 'LOAD_ON',
+        payload : null 
+    }
+)

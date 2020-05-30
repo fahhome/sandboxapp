@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal,Form} from  'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addUser,updateUser} from '../actions/action.js';
+import {addUser,updateUser,loadoff,loadon} from '../actions/action.js';
 import {Button} from 'antd';
 import DatePicker from "react-datepicker";
 
@@ -19,7 +19,10 @@ class ModalWindow extends React.Component{
                 update : this.props.update,
                 rowindex : this.props.rowindextoupdate
             }
-         
+
+            this.toggleup = this.toggleup.bind(this);
+            this.toggledown = this.toggledown.bind(this);
+            
        }
        
        static getDerivedStateFromProps(props,state){
@@ -28,6 +31,17 @@ class ModalWindow extends React.Component{
         return { rowindex : props.rowindextoupdate};
       }
        
+      toggleup(){
+        this.setState({
+            loading:true
+        })
+    }
+
+    toggledown(){
+     this.setState({
+         loading:false
+     })
+ }
      
        render(){
    
@@ -79,7 +93,7 @@ class ModalWindow extends React.Component{
                              />
                       </Form.Group>
                     
-                      <Button   onClick = {async()=>
+                      <Button  loading={this.props.loader.loading}  onClick = {async()=>
                         {
                            
 
@@ -94,6 +108,11 @@ class ModalWindow extends React.Component{
                             }
                             else{
                                  
+                                //this.toggleup();
+                                this.props.loadon();
+                                await wait();
+                                //this.toggledown();
+                                this.props.loadoff();
                                
                                 if(this.state.update === 'true')
                                    {
@@ -102,7 +121,7 @@ class ModalWindow extends React.Component{
                                     }
                                 else
                                 this.props.addUser(obj);
-                        
+                                
                                 this.props.onHide();
                             }
                         }}
@@ -121,8 +140,18 @@ class ModalWindow extends React.Component{
 
 }
 
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({addUser,updateUser} , dispatch);
+
+function mapStateToProps(state){
+  
+    return {
+        loader :  state.loader
+    }
+
 }
 
-export default connect(()=>{},mapDispatchToProps)(ModalWindow) ;
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({addUser,updateUser,loadon,loadoff} , dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ModalWindow) ;

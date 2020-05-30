@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal,Form} from  'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addTask,updateTask} from '../actions/action.js';
+import {addTask,updateTask,loadoff,loadon} from '../actions/action.js';
 import {Button} from 'antd';
 import DatePicker from "react-datepicker";
 
@@ -56,64 +56,6 @@ class AddTaskModal extends React.Component{
             await new Promise(resolve => setTimeout(resolve, duration));
           }
 
-          
-          if(this.state.user === true){
-
-               return(
-                    
-              <Modal
-               {...this.props}
-               size="lg"
-               aria-labelledby="contained-modal-title-vcenter"
-               centered
-              >
-
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter2">
-                Add New User
-              </Modal.Title>
-            </Modal.Header>
-              
-
-             <Modal.Body>
-                 
-                 <div className="container">
-                      
-                      <Form.Group controlId="UName">
-                             <Form.Label>User name</Form.Label>
-                             <Form.Control
-                               ref="usernameref"
-                               type="text"
-                               name="userfield1"
-                               value={this.state.userfield1}
-                               onChange={this.handleChange}
-                             />
-                      </Form.Group>
-
-
-                      <Form.Group controlId="UMail">
-                             <Form.Label>User Mail</Form.Label>
-                             <Form.Control
-                               ref="usermailref"
-                               type="text"
-                               name="userfield2"
-                               value={this.state.userfield2}
-                               onChange={this.handleChange}
-                             />
-                      </Form.Group>
-                    
-                       <button>Save/Update</button>
-                      
-                 </div>
-             </Modal.Body>    
-              </Modal>
-                
-               )
-
-          }
-          
-          else{
-
            return(
 
             <Modal
@@ -156,7 +98,7 @@ class AddTaskModal extends React.Component{
                              />
                        </Form.Group>
 
-                       <Button  loading={this.state.loading}  onClick = {async()=>
+                       <Button  loading={this.props.loader.loading}  onClick = {async()=>
                         {
                            
 
@@ -171,9 +113,11 @@ class AddTaskModal extends React.Component{
                             }
                             else{
                                  
-                                this.toggleup();
+                                //this.toggleup();
+                                this.props.loadon();
                                 await wait();
-                                this.toggledown();
+                                this.props.loadoff();
+                                //this.toggledown();
                                  if(this.state.pef1 === undefined || this.state.pef2 === undefined)
                                   {
                                     this.props.addTask(obj);
@@ -197,14 +141,22 @@ class AddTaskModal extends React.Component{
           </Modal>
         
            )
-                      }
+                      
 
        }
 
 }
 
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({addTask,updateTask} , dispatch);
+function mapStateToProps(state){
+  
+  return {
+      loader :  state.loader
+  }
+
 }
 
-export default connect(()=>{},mapDispatchToProps)(AddTaskModal) ;
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({addTask,updateTask , loadoff , loadon} , dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddTaskModal) ;
