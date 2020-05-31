@@ -35,9 +35,17 @@ class AddTaskModal extends React.Component{
        static getDerivedStateFromProps(props,state){
         console.log('AddTaskModal derived state') ;
         console.log(props);
-        return { rowindex : props.rowindextoupdate , editfield1 : props.f1prop};
+        return { rowindex : props.rowindextoupdate};
       }
 
+       
+      componentDidMount(){
+          
+        //this.refs.taskref.value = this.state.editfield1 ;
+        console.log('inside component did Mount')
+        console.log(this.refs)
+
+      }
 
    
        handleChange(event){
@@ -88,7 +96,8 @@ class AddTaskModal extends React.Component{
                                ref="taskref"
                                type="text"
                                name="pef1"
-                              // value={this.state.editfield1}
+                               defaultValue = {this.props.f1prop}
+                               //value={this.props.f1prop}
                                onChange={this.handleChange}
                              />
                        </Form.Group>
@@ -100,6 +109,7 @@ class AddTaskModal extends React.Component{
                                ref="dateref"
                                type="date"
                                name="pef2"
+                               defaultValue = {this.props.f2prop}
                               // value={this.state.editfield2}
                                onChange={this.handleChange}
                                required

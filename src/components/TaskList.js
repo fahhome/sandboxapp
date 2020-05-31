@@ -15,7 +15,7 @@ class TaskList extends React.Component{
             f2 : ''
         }
         this.ModalClose = this.ModalClose.bind(this);
-
+        
     }
 
 
