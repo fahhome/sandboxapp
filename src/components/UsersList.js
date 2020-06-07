@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteUser, updateUser } from "../actions/action.js";
 import UserModalWindow from "./UserModalWindow.js";
+import {Table} from "react-bootstrap";
 
 class UsersList extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class UsersList extends React.Component {
       f2: ""
     };
     this.ModalClose = this.ModalClose.bind(this);
+    this.renderUser = this.renderUser.bind(this);
   }
 
   ModalClose() {
@@ -22,6 +24,45 @@ class UsersList extends React.Component {
       rowindextoupdate: null
     });
   }
+
+
+  renderUser(user, index) {
+    return (
+      <tr key={index}>
+        <td></td>
+        <td>{user.field1}</td>
+        <td>
+          
+        {" "}
+           <button
+              onClick={() => {
+                   this.props.deleteUser(user.key);
+                  }}
+            >
+              Delete
+            </button>{" "}
+
+        </td>
+        <td>
+
+        <button
+            onClick={() => {
+            this.setState({
+                  showModal: true,
+                  rowindextoupdate: user.key
+                    });
+                }}
+        >
+                      {" "}
+             Update
+         </button>{" "}
+             
+
+        </td>
+      </tr>
+    )
+  }
+
 
   render() {
     console.log(this.state);
@@ -49,49 +90,18 @@ class UsersList extends React.Component {
           f1prop={f1}
           f2prop={f2}
         />
-        <table>
+        <Table>  
           <thead>
-            <tr>
-              <th>User</th>
-              <th>Email</th>
-            </tr>
-          </thead>
+          <tr>
+           <th></th>
+           <th>User Name</th>
+         </tr>
+        </thead>
+        <tbody>
+          {this.props.users.users.map(this.renderUser)}
+        </tbody>
+       </Table>    
 
-          <tbody>
-            {this.props.users.users.map((user, index) => {
-              return [
-                <tr>
-                  <td>{user.field1}</td>
-                  <td>{user.field2}</td>
-                  <td>
-                    {" "}
-                    <button
-                      onClick={() => {
-                        this.props.deleteUser(user.key);
-                      }}
-                    >
-                      Delete
-                    </button>{" "}
-                  </td>
-                  <td>
-                    {" "}
-                    <button
-                      onClick={() => {
-                        this.setState({
-                          showModal: true,
-                          rowindextoupdate: user.key
-                        });
-                      }}
-                    >
-                      {" "}
-                      Update
-                    </button>{" "}
-                  </td>
-                </tr>
-              ];
-            })}
-          </tbody>
-        </table>
       </div>
     );
   }

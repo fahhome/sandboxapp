@@ -3,31 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 import Todostab from './components/Todostab.js';
 import Userstab from './components/Userstab.js';
-import {BrowserRouter as Router , Switch , Route ,Link} from 'react-router-dom' ;
+import { Tabs } from 'antd';
+const { TabPane } = Tabs;
 
 function App() {
   return (
 
-   <Router> 
-    <div className="App">
-      <h1>ToDo Application</h1>
-      <Link to="/">
-        <button>Todo</button>
-      </Link>
-      <Link to="/users">
-         <button>Users</button>
-      </Link>
-   
-      <Switch>
-           
-      <Route  path="/" exact component={Todostab}/>
+    <div className='myTabs'>
+      <Tabs defaultActiveKey='1'  size='large'>
+        <TabPane tab='Tasks' key='1'>
+          <Todostab/>
+        </TabPane>
+        <TabPane tab='Users' key='2'>
+          <Userstab />
+        </TabPane>
+      </Tabs>
 
-      <Route  path="/users" exact component={Userstab}/>
-
-      </Switch>
-      
     </div>
-    </Router>
   );
 }
 
