@@ -1,28 +1,40 @@
-const usersReducer = (state=[] , action) =>{
+const usersReducer = (state={
+    users:[]
+} , action) =>{
 
     switch(action.type){
 
          case 'ADD_USER':
-             state = state.concat(action.payload);
-             break;
+            return {
+                ...state,
+                users: [...state.users, action.payload],
+              };
          case 'DELETE_USER':
-             state = state.slice();
-             state.splice(action.payload,1);
-             break;
-         case 'UPDATE_USER':
-             console.log('Update task received in  USER reducer');
-             
-             const i = action.payload.index ;
-             console.log(i);
-             console.log(state[i])
-             state=state.slice();
-             state[i].field1 = action.payload.field1 ;
-             state[i].field2 = action.payload.field2 ; 
-             console.log(state[i]);
-             break;    
+            const removeUser = state.users.filter(
+                (user) => action.payload !== user.key
+              );
+              return {
+                ...state,
+                users: removeUser,
+              };
+        case 'UPDATE_USER':
+              const editUsers = state.users.map((u) => {
+              if (u.key === action.payload.key) {
+             return Object.assign({}, u, {
+             ...action.payload,
+            });
+          }
+          return u;
+          });
+         return {
+            ...state,
+            users: editUsers,
+         };  
+           default :
+              return state;  
     }
 
-    return state;
+    //return state;
 
 }
 

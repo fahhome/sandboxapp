@@ -1,35 +1,38 @@
-
-const tasksReducer = (state=[] , action) =>{
+const tasksReducer = (state={
+    tasks:[]
+} , action) =>{
 
     switch(action.type){
 
          case 'ADD_TASK':
-             console.log('Inside ADD');
-             state = state.concat(action.payload);
-             console.log(state)
-             break;
+            return {
+                ...state,
+                tasks: [...state.tasks, action.payload],
+              };
          case 'DELETE_TASK':
-            console.log('INSIDE DELETE');
-          
-            state = state.slice();
-            state.splice(action.payload,1);
-           break;
-
-          
+            const removeTask = state.tasks.filter(
+                (task) => action.payload !== task.key
+              );
+              return {
+                ...state,
+                tasks: removeTask,
+              };
          case 'UPDATE_TASK':
-             console.log('Update task received in reducer');
-             
-             const i = action.payload.index ;
-             console.log(i);
-             console.log(state[i])
-             state=state.slice();
-             state[i].field1 = action.payload.field1 ;
-             state[i].field2 = action.payload.field2 ; 
-             console.log(state[i]);
-             break;    
+            const editTasks = state.tasks.map((u) => {
+                if (u.key === action.payload.key) {
+               return Object.assign({}, u, {
+               ...action.payload,
+              });
+            }
+            return u;
+            });
+           return {
+              ...state,
+              tasks: editTasks,
+           };  
+        default :
+           return state;  
     }
-
-    return state;
 
 }
 

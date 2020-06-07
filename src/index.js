@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
 import reducers from "./reducers/reducer.js";
+import 'antd/dist/antd.css';
 import * as serviceWorker from './serviceWorker';
 
 const {createStore} = require('redux');

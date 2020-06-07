@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addUser,updateUser,loadoff,loadon} from '../actions/action.js';
 import {Button} from 'antd';
+import { v4 as uuidv4 } from 'uuid';
 import DatePicker from "react-datepicker";
 
-class ModalWindow extends React.Component{
+class UserModalWindow extends React.Component{
 
        constructor(props){
          
@@ -45,7 +46,7 @@ class ModalWindow extends React.Component{
      
        render(){
    
-       
+        console.log('in user Modal Window');
         console.log(this.state)
 
         async function wait(duration = 2000) {
@@ -80,6 +81,7 @@ class ModalWindow extends React.Component{
                                ref="usernameref"
                                type="text"
                                name="userfield1"
+                               defaultValue={this.props.f1prop}
                              />
                       </Form.Group>
 
@@ -90,40 +92,32 @@ class ModalWindow extends React.Component{
                                ref="usermailref"
                                type="text"
                                name="userfield2"
+                               defaultValue={this.props.f2prop}
                              />
                       </Form.Group>
                     
                       <Button  loading={this.props.loader.loading}  onClick = {async()=>
                         {
-                           
-
-                            var obj = {}
-                        
+              
+                            var obj = {};
                             obj.field1 = this.refs.usernameref.value ;
                             obj.field2 = this.refs.usermailref.value;
-                            if(null === obj.field1 || '' === obj.field1 || null === obj.field2 || '' === obj.field2)
-                            {
-                                alert('Both are madatory to be filled');
-                                
-                            }
-                            else{
-                                 
-                                //this.toggleup();
-                                this.props.loadon();
-                                await wait();
-                                //this.toggledown();
-                                this.props.loadoff();
+                            obj.key = uuidv4();
+                           
+                            this.props.loadon();
+                            await wait();
+                            this.props.loadoff();
                                
-                                if(this.state.update === 'true')
-                                   {
-                                       obj.index = this.state.rowindex.index ;
-                                       this.props.updateUser(obj);
-                                    }
-                                else
-                                this.props.addUser(obj);
+                            if(this.state.update === 'true')
+                                {
+                                    obj.key = this.state.rowindex ;
+                                    this.props.updateUser(obj);
+                                }
+                            else
+                               this.props.addUser(obj);
                                 
-                                this.props.onHide();
-                            }
+                               this.props.onHide();
+                            
                         }}
                         > Save</Button>
                       
@@ -131,10 +125,7 @@ class ModalWindow extends React.Component{
              </Modal.Body>    
               </Modal>
                 
-               )
-
-          
-          
+               )      
 
        }
 
@@ -154,4 +145,4 @@ function mapDispatchToProps(dispatch){
     return bindActionCreators({addUser,updateUser,loadon,loadoff} , dispatch);
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ModalWindow) ;
+export default connect(mapStateToProps,mapDispatchToProps)(UserModalWindow) ;
