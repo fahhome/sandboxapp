@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteUser, updateUser } from "../actions/action.js";
-import UserModalWindow from "./UserModalWindow.js";
+import UserModalWindow from "./common/UserModalWindow.js";
 import {Table} from "react-bootstrap";
 
 class UsersList extends React.Component {

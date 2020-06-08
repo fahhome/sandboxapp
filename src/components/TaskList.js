@@ -3,7 +3,7 @@ import {Table} from "react-bootstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteTask, updateTask } from "../actions/action.js";
-import TaskModalWindow from "./TaskModalWindow.js";
+import TaskModalWindow from "./common/TaskModalWindow.js";
 
 
 class TaskList extends React.Component {

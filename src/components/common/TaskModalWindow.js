@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { addTask, updateTask, loadoff, loadon } from "../actions/action.js";
+import { addTask, updateTask, loadoff, loadon } from "../../actions/action.js";
 import { Button } from "antd";
 import { v4 as uuidv4 } from 'uuid';
 class TaskModalWindow extends React.Component {

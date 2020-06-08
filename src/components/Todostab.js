@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addTask } from "../actions/action.js";
 import { Button, ButtonToolbar } from "react-bootstrap";
-import TaskModalWindow from "./TaskModalWindow.js";
+import TaskModalWindow from "./common/TaskModalWindow.js";
 
 class Todostab extends React.Component {
   constructor(props) {

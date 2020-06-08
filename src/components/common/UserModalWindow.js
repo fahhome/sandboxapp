@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addUser, updateUser, loadoff, loadon } from '../actions/action.js';
+import { addUser, updateUser, loadoff, loadon } from '../../actions/action.js';
 import { Button } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import DatePicker from "react-datepicker";

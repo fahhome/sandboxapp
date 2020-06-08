@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { addTask, addUser } from "../actions/action.js";
 import { Button, ButtonToolbar } from "react-bootstrap";
 import UsersList from "./UsersList.js";
-import UserModalWindow from "./UserModalWindow.js";
+import UserModalWindow from "./common/UserModalWindow.js";
 
 class Userstab extends React.Component {
   constructor(props) {
