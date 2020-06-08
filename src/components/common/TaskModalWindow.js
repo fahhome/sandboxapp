@@ -3,29 +3,49 @@ import { Modal, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addTask, updateTask, loadoff, loadon } from "../../actions/action.js";
+import  LoadingButton  from './LoadingButton.js';
 import { Button } from "antd";
 import { v4 as uuidv4 } from 'uuid';
 class TaskModalWindow extends React.Component {
   constructor(props) {
     super(props);
 
+
+    this.taskref = React.createRef();
+    this.dateref = React.createRef();
+
     this.state = {
       loading: false,
       update: this.props.update,
       rowindex: this.props.rowindextoupdate,
-      taskerror : null
+      taskerror : null,
+      tval : null ,
+      dval :null
     };
 
     this.toggleup = this.toggleup.bind(this);
     this.toggledown = this.toggledown.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleTask = this.handleTask.bind(this);
+    this.handleDate = this.handleDate.bind(this);
   }
 
+
+
+  handleDate(event){
+
+    var val = event.target.value;
+    this.setState({
+      dval: val
+    })
+  }
 
   handleTask(event){
       
     var val = event.target.value ;
+    this.setState({
+       tval : val
+    })
     if(null === val || '' === val){
         this.setState({
            taskerror : '* Please enter your task !'
@@ -82,7 +102,7 @@ class TaskModalWindow extends React.Component {
             <Form.Group controlId="TDesc">
               <Form.Label>Task Description</Form.Label>
               <Form.Control
-                ref="taskref"
+                ref={this.taskref}
                 type="text"
                 name="pef1"
                 defaultValue={this.props.f1prop}
@@ -94,45 +114,19 @@ class TaskModalWindow extends React.Component {
             <Form.Group controlId="DA">
               <Form.Label>Date Added</Form.Label>
               <Form.Control
-                ref="dateref"
+                ref={this.dateref}
                 type="date"
                 name="pef2"
                 defaultValue={this.props.f2prop}
-                onChange={this.handleChange}
+                onChange={this.handleDate}
                 required
                 placeholder="Date Added"
               />
             </Form.Group>
 
-            <Button
-              loading={this.props.loader.loading}
-              onClick={async () => {
-                var obj = {};
-                
-               
-                if(null === this.state.taskerror){
+            <LoadingButton taskerror={this.state.taskerror}  taskrefvalue = {this.state.tval}  daterefvalue = {this.state.dval}  update = {this.state.update}   rowindex = {this.state.rowindex}  onHide = {this.props.onHide}>
+            </LoadingButton>
 
-                obj.field1 = this.refs.taskref.value;
-                obj.field2 = this.refs.dateref.value;
-                obj.key = uuidv4();
-               
-                  this.props.loadon();
-                  await wait();
-                  this.props.loadoff();
-                  if (this.state.update === "true") {
-                    obj.key = this.state.rowindex; //change
-                    this.props.updateTask(obj);
-                  } else {
-                    this.props.addTask(obj);
-                  }
-
-                  this.props.onHide();
-                }
-                
-              }}
-            >
-              Save
-            </Button>
           </div>
         </Modal.Body>
         <Modal.Footer />
