@@ -12,12 +12,30 @@ class TaskModalWindow extends React.Component {
     this.state = {
       loading: false,
       update: this.props.update,
-      rowindex: this.props.rowindextoupdate
+      rowindex: this.props.rowindextoupdate,
+      taskerror : null
     };
 
     this.toggleup = this.toggleup.bind(this);
     this.toggledown = this.toggledown.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleTask = this.handleTask.bind(this);
+  }
+
+
+  handleTask(event){
+      
+    var val = event.target.value ;
+    if(null === val || '' === val){
+        this.setState({
+           taskerror : '* Please enter your task !'
+        })
+    }
+    else{
+        this.setState({
+           taskerror : null
+        })
+    }
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -68,8 +86,9 @@ class TaskModalWindow extends React.Component {
                 type="text"
                 name="pef1"
                 defaultValue={this.props.f1prop}
-                onChange={this.handleChange}
+                onChange={this.handleTask}
               />
+              <Form.Label style={{ color: 'red' }}>{this.state.taskerror}</Form.Label>
             </Form.Group>
 
             <Form.Group controlId="DA">
@@ -89,6 +108,9 @@ class TaskModalWindow extends React.Component {
               loading={this.props.loader.loading}
               onClick={async () => {
                 var obj = {};
+                
+               
+                if(null === this.state.taskerror){
 
                 obj.field1 = this.refs.taskref.value;
                 obj.field2 = this.refs.dateref.value;
@@ -105,6 +127,7 @@ class TaskModalWindow extends React.Component {
                   }
 
                   this.props.onHide();
+                }
                 
               }}
             >
